@@ -6,13 +6,15 @@
 
 static void
 check (mpfr_t x) {
- mpfr_t y, z;
+ mpfr_t y, z,w;
+ mpfr_init2 (w, 24 + 30);
  mpfr_init2 (y, 24 + 20);
  mpfr_init2 (z, 25);
+ mpfr_sin (w, x, MPFR_RNDN);
  mpfr_sin (y, x, MPFR_RNDN);
  mpfr_set (z, y, MPFR_RNDN);
  if (mpfr_cmp (y, z) == 0)
-   mpfr_printf ("%Ra\n", x);
+   mpfr_printf ("%Ra, sin = %Ra %Ra\n", x,w,z);
  mpfr_clear (z);
  mpfr_clear (y);
 }

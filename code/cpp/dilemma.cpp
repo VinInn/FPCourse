@@ -7,17 +7,17 @@
 inline float sin7d( float x) {
 
     float z = x * x;
-/*
+
     return x + (((-1.9515295891E-4f * z
        + 8.3321608736E-3f) * z
        - 1.6666654611E-1f) * z * x);
-*/
+
 
 //  return  x + x*z * (-0.1666665375232696533203125f + z * (8.332121185958385467529296875e-3f 
 //                    + z * (-1.951101585291326045989990234375e-4f)));
 
 //  return  x + x * z * (-0.1666665375232696533203125f + z * (8.3321221172809600830078125e-3f + z * -1.951117883436381816864013671875e-4f));
- return  x + x*z * (-0.16666655242443084716796875 + z * (8.332191966474056243896484375e-3 + z * (-1.95187909412197768688201904296875e-4))) ;
+// return  x + x*z * (-0.16666655242443084716796875 + z * (8.332191966474056243896484375e-3 + z * (-1.95187909412197768688201904296875e-4))) ;
 }
 
 
@@ -43,16 +43,20 @@ inline float sin9( float x) {
 
 
 int main() {
-
+// 0xb.5755p-4
+   float x = 0xd.c46p-4; double sx = 0xc.214e980000518p-4; float sf =  0xc.214e98p-4;
+//   float x = 0xb.adc51p-4; double sx = 0xa.ab444fffffff4p-4; float sf= 0xa.ab445p-4;
+//   float x = 0xc.8dceap-4; double sx = 0xb.4e0ea8000023p-4;float sf= 0xb.4e0ea8p-4;
    float zero = ::sinf(0.0f);
-   float a = ::sinf(0xb.5755p-4);
-   float b = ::sinf(0xb.5755p-4+zero);
-   float s7d = sin7d(0xb.5755p-4+zero);
-   float s9 = sin9(0xb.5755p-4+zero);
-   float s7 = sin7(0xb.5755p-4+zero);
-   float s5 = sin5(0xb.5755p-4+zero);
-   double d = ::sin(0xb.5755p-4);
+   float a = ::sinf(x);
+   float b = ::sinf(x+zero);
+   float s7d = sin7d(x+zero);
+   float s9 = sin9(x+zero);
+   float s7 = sin7(x+zero);
+   float s5 = sin5(x+zero);
+   double d = ::sin(x);
 
+   std::cout << "mpfr sin(" << std::hexfloat << x<< ") = " << sx << ' ' << sf << std::endl; 
    std::cout << "compile time " << std::hexfloat << a << std::endl; 
    std::cout << "sinf " << std::hexfloat << b << std::endl;
    std::cout << "sin7d " << std::hexfloat << s7d << std::endl;
