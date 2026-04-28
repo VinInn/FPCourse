@@ -17,6 +17,9 @@ int main(int argc, char** argv) {
   std::cout << std::hexfloat << piw << std::endl;
   std::cout << std::pow(9.f*9.f + 19.f*19.f/22.f,0.25f) << std::endl;
   std::cout << std::exp(piw) -piw << std::endl;
+  std::cout << std::exp(piw) -piw << std::endl;
+  std::cout << std::exp(pi) -pi << std::endl;
+  std::cout << exp(M_PI) -M_PI << std::endl;
 
   return 0;
 }
