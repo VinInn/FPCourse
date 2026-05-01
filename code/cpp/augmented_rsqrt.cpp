@@ -25,14 +25,15 @@ std::pair<float,float> rsqrt(float x) {
    #endif
    // standard one NR iteration
    r =  0.5f * r * (3.f - x * (r * r));
+//   r =  0.5f * r * (3.f - x * (r * r));
 
    float rx = r*x, drx = __builtin_fmaf(r, x, -rx);
    float h = __builtin_fmaf(r,rx,-1.0f) + r*drx, dr = (r*0.5f)*h;
 
-   auto hi = 0.5*r* ( (3.f - r*rx) - r*drx);
+//   auto hi = 0.5*r* ( (3.f - r*rx) - r*drx);
 
    // fast_two_sum
-   // auto hi = r - dr;
+   auto hi = r - dr;
    auto e = hi - r; /* exact */
    auto lo = -dr - e; /* exact */
    // float rf = r - dr;
