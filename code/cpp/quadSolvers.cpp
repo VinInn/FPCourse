@@ -4,7 +4,7 @@
 #include<cmath>
 #include<tuple>
 #include<limits>
-#include<quadmath.h>
+// #include<quadmath.h>
 #include<vector>
 
 template<typename T>
@@ -13,12 +13,13 @@ inline T det(T a, T b, T c) {
   return std::sqrt(b*b-a*c);
 }
 
+/*
 template<>
 inline __float128 det(__float128 a,  __float128 b, __float128 c) {
   // compute determinant for equation ax^2 + 2bx + c= 0
   return ::sqrtq(b*b-a*c);
 }
-
+*/
 
 template<typename T>
 inline std::tuple<T,T> quadSolverNaive(T a, T b, T c) {
@@ -38,6 +39,7 @@ inline std::tuple<T,T> quadSolverOpt(T a, T b, T c) {
   return std::make_tuple(q/a,c/q);
 }
 
+/*
 template<>
 inline std::tuple<__float128,__float128> quadSolverOpt(__float128 a, __float128 b, __float128 c) {
   // solve equation ax^2 + 2bx + c= 0
@@ -45,7 +47,7 @@ inline std::tuple<__float128,__float128> quadSolverOpt(__float128 a, __float128 
   auto q = -(::copysignq(det(a,b,c),b)+b);
   return std::make_tuple(q/a,c/q);
 }
-
+*/
 
 
 
@@ -56,7 +58,7 @@ using LD = long double;
 
 std::vector<float> vf;
 std::vector<double> vd;
-std::vector<__float128> vt;
+// std::vector<__float128> vt;
 
 template<typename T> 
 void print(T x) {
@@ -111,9 +113,18 @@ void circle(int q) {
 
     print(x0-std::sqrt(radius*radius-halfChord*halfChord));
     print(x1-(x0-std::sqrt(radius*radius-halfChord*halfChord)));
+    {
+    std::cout << "NAIVE" << std::endl;
+    auto s1 = quadSolverNaive(T(1),-radius, halfChord*halfChord);
+    print(xm+std::get<1>(s1));
+    print(x1-(xm+std::get<1>(s1)));
+    }
+    std::cout << "OPT" << std::endl;
     auto s1 = quadSolverOpt(T(1),-radius, halfChord*halfChord);
     print(xm+std::get<1>(s1));
     print(x1-(xm+std::get<1>(s1)));
+
+
     
     std::cout << std::endl;
   }
@@ -123,12 +134,12 @@ void circle(int q) {
 
 int main(int argc, char **){
 
-  go<__float128>(argc,vt);
+  // go<__float128>(argc,vt);
   go<double>(argc,vd);
   go<float>(argc,vf);
 
-//  circle<double>(argc);
-//  circle<float>(argc);
+  circle<double>(argc);
+  circle<float>(argc);
 
   
   return 0;
