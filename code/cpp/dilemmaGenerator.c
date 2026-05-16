@@ -52,6 +52,7 @@ void checkS( float x) {
 int main()
 {
 
+#ifdef MPFR
  mpfr_t x,mx;
  mpfr_init2 (x, 24);
  mpfr_init2 (mx, 24);
@@ -62,10 +63,11 @@ int main()
    mpfr_nextabove (x);
  }
  mpfr_clear (x);
+#else
 
-
-//  for (float x=0x1.0p-54; x<0x1.1p-1; x = nextafterf(x,10.f)) 
-//    checkS(x);
+  for (float x=0x1.0p-54; x<0x1.1p-1; x = nextafterf(x,10.f)) 
+    checkS(x);
+#endif
 
   return 0;
 
