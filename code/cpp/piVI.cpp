@@ -37,9 +37,9 @@ using T = float;
 int main() {
 
 
-  for (int k=1; k<1024; k*=2) {
+  for (int k=1; k<4*1024; k*=2) {
 
-  int N = k * 1024;
+  int N = k * 256;
 
   T step = T(1)/T(N);
   T sum=0;
