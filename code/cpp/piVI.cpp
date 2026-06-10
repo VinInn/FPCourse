@@ -42,7 +42,7 @@ int main() {
   int N = k * 256;
 
   T step = T(1)/T(N);
-  T sum=0;
+  T sum=0, isum=0; 
   T ksum=0, t=0;
   for (int i=0; i<N; ++i) {
     T x = (T(i) + T(0.5f))*step;
@@ -51,10 +51,13 @@ int main() {
     auto y = x - t; 
     auto s = ksum + y;
     t = (s - ksum) - y;   
-    ksum = s;                                    
+    ksum = s;
+    x = (T(N-i) - T(0.5f))*step;
+    x = T(4)/(T(1)+x*x);
+    isum +=x;
   }
-  sum *=step; ksum*=step;
-  std::cout << N << ' ' << std::hexfloat << sum << ' ' << ksum << ',' << t*step << std::endl; 
+  sum *=step; ksum*=step; isum*=step;
+  std::cout << N << ' ' << std::hexfloat << sum << ' ' << ksum << ',' << t*step << ' ' << isum << std::endl; 
 
 
 
