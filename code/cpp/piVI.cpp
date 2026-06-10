@@ -31,6 +31,26 @@ std::tuple<T,T> aRcp(T x, T e) {
   return aSum(t, d);
 }
 
+#ifndef KK
+#define KK 2
+#endif
+
+template<typename T> 
+T pairwise(T step, int p, int e) {
+ // std::cout << "rec " << p << ' ' << e << std::endl;
+ if (e-p<=KK) {
+    T sum=0; 
+    for (int i=p; i<e; ++i) {
+       T x = (T(i) + T(0.5))*step; 
+       sum +=  T(4)/(T(1)+x*x);         
+    }
+    return sum;
+ } else {
+   int m = p+(e-p)/2;
+   return pairwise(step,p,m)+pairwise(step,m,e);
+  }  
+}
+
 using T = float;
 
 
@@ -44,20 +64,29 @@ int main() {
   T step = T(1)/T(N);
   T sum=0, isum=0; 
   T ksum=0, t=0;
+  T old = 0; int nnew=0;
+#ifdef SUM
+  T x = - T(0.5)*step;
+#endif
   for (int i=0; i<N; ++i) {
-    T x = (T(i) + T(0.5f))*step;
-    x = T(4)/(T(1)+x*x);
-    sum +=x;
-    auto y = x - t; 
+#ifdef SUM
+    x += step;
+#else
+    T x = (T(i) + T(0.5))*step;
+#endif
+    auto w = T(4)/(T(1)+x*x);
+    if (w!=old) { old=w; ++nnew;}
+    sum +=w;
+    auto y = w - t; 
     auto s = ksum + y;
     t = (s - ksum) - y;   
     ksum = s;
-    x = (T(N-i) - T(0.5f))*step;
-    x = T(4)/(T(1)+x*x);
-    isum +=x;
+    w = (T(N-i) - T(0.5))*step;
+    w = T(4)/(T(1)+w*w);
+    isum +=w;
   }
   sum *=step; ksum*=step; isum*=step;
-  std::cout << N << ' ' << std::hexfloat << sum << ' ' << ksum << ',' << t*step << ' ' << isum << std::endl; 
+  std::cout << N << ' ' << nnew << ": " << std::hexfloat << sum << ' ' << ksum << ',' << t*step << ' ' << isum << ' ' << step*pairwise(step,0,N) << std::endl; 
 
 
 
