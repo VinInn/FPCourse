@@ -115,7 +115,7 @@ int main() {
   sum *=step; ksum*=step; psum*=step;
   auto isum = pairwiseInt(step,0,N);
   ++q;
-  float jsum =  step*exp2f(q-23+2)*float(isum);
+  float jsum =  step*exp2f(q-23+4)*float(isum);
   std::cout << N << ' ' << nnew << ": " << std::hexfloat << sum << ' ' << ksum << ',' << t*step << ' ' << psum << ' ' << step*pairwise(step,0,N) << ' ' << jsum << std::endl; 
 
 
