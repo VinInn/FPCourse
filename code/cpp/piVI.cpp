@@ -1,6 +1,9 @@
 #include <iostream>
 #include <iomanip>
 #include <tuple>
+#include <cstring>
+#include <cmath>
+#include <cstdint>
 
 template<typename T> 
 std::tuple<T,T> aSum(T x, T y) {
@@ -51,18 +54,42 @@ T pairwise(T step, int p, int e) {
   }  
 }
 
+#include<cassert>
+uint32_t pairwiseInt(float step, int p, int e) {
+ // std::cout << "rec " << p << ' ' << e << std::endl;
+ if (e-p<=16) {   // we have 32 bits and we start with 24, so summing 16 is safe
+    uint32_t sum=0;
+    for (int i=p; i<e; ++i) {
+       float x = (float(i) + 0.5f)*step;
+       auto const y =  4.f/(1.f+x*x);  // 2<x<4 same binade
+       assert(y<=4.f && y>=2.f);
+       uint32_t ix; memcpy(&ix,&y,sizeof(float));
+       ix &= 0x007fffff; // significand
+       ix |= 0x00800000; // add hidden bit
+       sum +=ix;
+//       std::cout << i << ' ' << ix << ' ' << sum << std::endl;
+    }
+//    std::cout << "rec " << p << ' ' << sum << std::endl;
+    return (sum+1)>>1; // divide by 2 (shall we round to even?)
+ } else {
+   int m = p+(e-p)/2;
+   return (pairwiseInt(step,p,m)+pairwiseInt(step,m,e)+1)>>1;
+  }
+}
+
+
 using T = float;
 
 
 int main() {
 
-
+  int q=1;
   for (int k=1; k<4*1024; k*=2) {
 
   int N = k * 256;
 
   T step = T(1)/T(N);
-  T sum=0, isum=0; 
+  T sum=0, psum=0; 
   T ksum=0, t=0;
   T old = 0; int nnew=0;
 #ifdef SUM
@@ -83,10 +110,13 @@ int main() {
     ksum = s;
     w = (T(N-i) - T(0.5))*step;
     w = T(4)/(T(1)+w*w);
-    isum +=w;
+    psum +=w;
   }
-  sum *=step; ksum*=step; isum*=step;
-  std::cout << N << ' ' << nnew << ": " << std::hexfloat << sum << ' ' << ksum << ',' << t*step << ' ' << isum << ' ' << step*pairwise(step,0,N) << std::endl; 
+  sum *=step; ksum*=step; psum*=step;
+  auto isum = pairwiseInt(step,0,N);
+  ++q;
+  float jsum =  step*exp2f(q-23+2)*float(isum);
+  std::cout << N << ' ' << nnew << ": " << std::hexfloat << sum << ' ' << ksum << ',' << t*step << ' ' << psum << ' ' << step*pairwise(step,0,N) << ' ' << jsum << std::endl; 
 
 
 
