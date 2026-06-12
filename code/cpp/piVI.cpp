@@ -54,6 +54,11 @@ T pairwise(T step, int p, int e) {
   }  
 }
 
+// round to even
+inline uint32_t r2e(uint32_t k) {
+  return ( (k&3) == 3 ) ? k+1 : k;
+}
+
 #include<cassert>
 uint32_t pairwiseInt(float step, int p, int e) {
  // std::cout << "rec " << p << ' ' << e << std::endl;
@@ -70,10 +75,10 @@ uint32_t pairwiseInt(float step, int p, int e) {
 //       std::cout << i << ' ' << ix << ' ' << sum << std::endl;
     }
 //    std::cout << "rec " << p << ' ' << sum << std::endl;
-    return (sum+1)>>1; // divide by 2 (shall we round to even?)
+    return r2e(sum)>>1; // divide by 2 (shall we round to even?)
  } else {
    int m = p+(e-p)/2;
-   return (pairwiseInt(step,p,m)+pairwiseInt(step,m,e)+1)>>1;
+   return r2e(pairwiseInt(step,p,m)+pairwiseInt(step,m,e))>>1;
   }
 }
 
