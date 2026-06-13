@@ -71,7 +71,7 @@ uint32_t pairwiseInt(float step, int p, int e) {
        uint32_t ix; memcpy(&ix,&y,sizeof(float));
        ix &= 0x007fffff; // significand
        ix |= 0x00800000; // add hidden bit
-       if (x==1.f) ix = 0x01000000-1; // ix = 0x00ffffff; // avoid overflow;
+       if (y==1.f) ix = 0x01000000-1; // ix = 0x00ffffff; // avoid overflow;
        sum +=ix;
 //       std::cout << i << ' ' << ix << ' ' << sum << std::endl;
     }
@@ -125,7 +125,25 @@ int main() {
   float z; memcpy(&z,&ie,sizeof(float));
   // float jsum =  step*exp2f(q-23)*float(isum);
   float jsum =  step*z*float(isum);
-  std::cout << N << ' ' << nnew << ": " << std::hexfloat << sum << ' ' << ksum << ',' << t*step << ' ' << psum << ' ' << step*pairwise(step,0,N) << ' ' << jsum << std::endl; 
+
+  // sum in 64 bit integer  (will not overflow!)
+  uint64_t sum64=0;
+  int n1=0;
+  for (int i=0; i<N; ++i) {
+       float x = (float(i) + 0.5f)*step;
+       auto const y =  1.f/(1.f+x*x);  // 2<x<4 same binade
+       assert(y<=1.f && y>=0.5f);
+       uint32_t ix; memcpy(&ix,&y,sizeof(float));
+       ix &= 0x007fffff; // significand
+       ix |= 0x00800000; // add hidden bit
+       if (y==1.f) {++n1; ix = 0x01000000;}
+       sum64 +=ix;
+   }
+   ie = (1-23+127) << 23;
+   memcpy(&z,&ie,sizeof(float));
+   float jsum64 =  step*z*float(sum64);
+
+  std::cout << N << ' ' << nnew << ": " << std::hexfloat << sum << ' ' << ksum << ',' << t*step << ' ' << psum << ' ' << step*pairwise(step,0,N) << ' ' << jsum << ' ' << jsum64 << ' ' << n1 << std::endl; 
 
 
 
