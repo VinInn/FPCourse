@@ -66,12 +66,12 @@ uint32_t pairwiseInt(float step, int p, int e) {
     uint32_t sum=0;
     for (int i=p; i<e; ++i) {
        float x = (float(i) + 0.5f)*step;
-       auto const y =  4.f/(1.f+x*x);  // 2<x<4 same binade
-       assert(y<=4.f && y>=2.f);
+       auto const y =  1.f/(1.f+x*x);  // 2<x<4 same binade
+       assert(y<=1.f && y>=0.5f);
        uint32_t ix; memcpy(&ix,&y,sizeof(float));
        ix &= 0x007fffff; // significand
        ix |= 0x00800000; // add hidden bit
-       if (x==4.f) ix = 0x01000000-1; // ix = 0x00ffffff; // avoid overflow;
+       if (x==1.f) ix = 0x01000000-1; // ix = 0x00ffffff; // avoid overflow;
        sum +=ix;
 //       std::cout << i << ' ' << ix << ' ' << sum << std::endl;
     }
