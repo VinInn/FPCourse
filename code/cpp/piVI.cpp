@@ -62,7 +62,7 @@ inline uint32_t r2e(uint32_t k) {
 #include<cassert>
 uint32_t pairwiseInt(float step, int p, int e) {
  // std::cout << "rec " << p << ' ' << e << std::endl;
- if (e-p<=16) {   // we have 32 bits and we start with 24, so summing 16 is safe
+ if (e-p<=256) {   // we have 32 bits and we start with 24, so summing 256 is safe
     uint32_t sum=0;
     for (int i=p; i<e; ++i) {
        float x = (float(i) + 0.5f)*step;
@@ -71,6 +71,7 @@ uint32_t pairwiseInt(float step, int p, int e) {
        uint32_t ix; memcpy(&ix,&y,sizeof(float));
        ix &= 0x007fffff; // significand
        ix |= 0x00800000; // add hidden bit
+       if (x==4.f) ix = 0x01000000-1; // ix = 0x00ffffff; // avoid overflow;
        sum +=ix;
 //       std::cout << i << ' ' << ix << ' ' << sum << std::endl;
     }
@@ -120,7 +121,10 @@ int main() {
   sum *=step; ksum*=step; psum*=step;
   auto isum = pairwiseInt(step,0,N);
   ++q;
-  float jsum =  step*exp2f(q-23+4)*float(isum);
+  uint32_t ie = (q-23+127) << 23;
+  float z; memcpy(&z,&ie,sizeof(float));
+  // float jsum =  step*exp2f(q-23)*float(isum);
+  float jsum =  step*z*float(isum);
   std::cout << N << ' ' << nnew << ": " << std::hexfloat << sum << ' ' << ksum << ',' << t*step << ' ' << psum << ' ' << step*pairwise(step,0,N) << ' ' << jsum << std::endl; 
 
 
