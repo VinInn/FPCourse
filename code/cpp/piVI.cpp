@@ -5,6 +5,19 @@
 #include <cmath>
 #include <cstdint>
 
+
+#ifdef RCP14
+#include <x86intrin.h>
+float rcp(float x) {
+  float y;
+  _mm_store_ss( &y,_mm_rcp_ss( _mm_load_ss( &x ) ) );
+  // return y;
+  return (y+y) - x*y*y; // One round of Newton's method
+}
+#else
+float rcp(float x) { return 1.f/x;}
+#endif
+
 template<typename T> 
 std::tuple<T,T> aSum(T x, T y) {
   /// valid only if |x| > |y|
@@ -45,7 +58,7 @@ T pairwise(T step, int p, int e) {
     T sum=0; 
     for (int i=p; i<e; ++i) {
        T x = (T(i) + T(0.5))*step; 
-       sum +=  T(4)/(T(1)+x*x);         
+       sum +=  T(4)*rcp(T(1)+x*x);
     }
     return sum;
  } else {
@@ -66,7 +79,7 @@ uint32_t pairwiseInt(float step, int p, int e) {
     uint32_t sum=0;
     for (int i=p; i<e; ++i) {
        float x = (float(i) + 0.5f)*step;
-       auto const y =  1.f/(1.f+x*x);  // 2<x<4 same binade
+       auto const y =  rcp(1.f+x*x);  // 2<x<4 same binade
        assert(y<=1.f && y>=0.5f);
        uint32_t ix; memcpy(&ix,&y,sizeof(float));
        ix &= 0x007fffff; // significand
@@ -107,7 +120,7 @@ int main() {
 #else
     T x = (T(i) + T(0.5))*step;
 #endif
-    auto w = T(4)/(T(1)+x*x);
+    auto w = T(4)*rcp(T(1)+x*x);
     if (w!=old) { old=w; ++nnew;}
     sum +=w;
     auto y = w - t; 
@@ -115,7 +128,7 @@ int main() {
     t = (s - ksum) - y;   
     ksum = s;
     w = (T(N-i) - T(0.5))*step;
-    w = T(4)/(T(1)+w*w);
+    w = T(4)*rcp(T(1)+w*w);
     psum +=w;
   }
   sum *=step; ksum*=step; psum*=step;
@@ -131,7 +144,7 @@ int main() {
   int n1=0;
   for (int i=0; i<N; ++i) {
        float x = (float(i) + 0.5f)*step;
-       auto const y =  1.f/(1.f+x*x);  // 2<x<4 same binade
+       auto const y =  rcp(1.f+x*x);  // 2<x<4 same binade
        assert(y<=1.f && y>=0.5f);
        uint32_t ix; memcpy(&ix,&y,sizeof(float));
        ix &= 0x007fffff; // significand
