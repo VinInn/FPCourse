@@ -5,6 +5,11 @@
 - Floating-point arithmetic (2023) https://www.cambridge.org/core/journals/acta-numerica/article/floatingpoint-arithmetic/287C4D5F6D4A43FBEEB1ABED2A405AAF
 - Low Precision  (2025) https://www.siam.org/publications/siam-news/articles/mixed-precision-computing-high-accuracy-with-low-precision/
 
+# Advanced
+- Dekker’s floating point number system and compensated summation algorithms https://arxiv.org/pdf/2602.19452v1
+- 
+
+
 # Bleeding edge
 - IEEE Arith Conference: https://arith2026.org/archive.html
 - FPTalks: https://fptalks.org/
