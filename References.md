@@ -1,4 +1,5 @@
 # Basics
+- Training on floating-point computations (December 2025): The IEEE 754 standard, Math Fundamentals, Core Algorithms, Elementary Function Approximation, Software Tools.
 - What Every Computer Scientist Should Know About Floating-Point Arithmetic (1991)  https://dl.acm.org/doi/pdf/10.1145/103162.103163
 - Handbook of Floating-Point Arithmetic(2018)  https://link.springer.com/book/10.1007/978-3-319-76526-6
 - Elementary Functions  (2016) https://link.springer.com/book/10.1007/978-1-4899-7983-4
