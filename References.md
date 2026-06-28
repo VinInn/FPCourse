@@ -7,8 +7,10 @@
 
 # Advanced
 - Dekker’s floating point number system and compensated summation algorithms https://arxiv.org/pdf/2602.19452v1
-- 
-
+- core-math https://core-math.gitlabpages.inria.fr/
+- Correctly Rounded Evaluation of a Function: Why, How, and at What Cost? https://dl.acm.org/doi/pdf/10.1145/3747840
+- Function approximation: https://hal.science/hal-02517784v1/file/approxfunctions.pdf
+- x86-64 instruction latencies : https://www.agner.org/optimize/instruction_tables.pdf  (pages 155-156 and 379-380)
 
 # Bleeding edge
 - IEEE Arith Conference: https://arith2026.org/archive.html
