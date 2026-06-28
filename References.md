@@ -14,3 +14,10 @@
 - Keeping Science on Keel When Software Moves https://dl.acm.org/doi/pdf/10.1145/3382037
 - Is that answer “right” ? Evaluating correctness in million-line climate models https://drive.google.com/file/d/1g5l5hxCZo7WYe8KzDnjVMlwKDDOXgund/view?pli=1
 - 
+
+# Anedocts
+-http://ta.twi.tudelft.nl/users/vuik/wi211/disasters.html
+-https://www.iro.umontreal.ca/~mignotte/IFT2425/Disasters.html
+-https://slate.com/technology/2019/10/round-floor-software-errors-stock-market-battlefield.html
+-https://medium.com/@sohail_saifii/the-floating-point-standard-thats-silently-breaking-financial-software-7f7e93430dbb
+-https://pavpanchekha.com/blog/casio-mathjs.html
