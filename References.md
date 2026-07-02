@@ -4,8 +4,9 @@
 - Handbook of Floating-Point Arithmetic(2018)  https://link.springer.com/book/10.1007/978-3-319-76526-6
 - Elementary Functions  (2016) https://link.springer.com/book/10.1007/978-1-4899-7983-4
 - Floating-point arithmetic (2023) https://www.cambridge.org/core/journals/acta-numerica/article/floatingpoint-arithmetic/287C4D5F6D4A43FBEEB1ABED2A405AAF
-- Low Precision  (2025) https://www.siam.org/publications/siam-news/articles/mixed-precision-computing-high-accuracy-with-low-precision/
-
+- Mixed/Low Precision (2025) https://www.siam.org/publications/siam-news/articles/mixed-precision-computing-high-accuracy-with-low-precision/
+-  Mixed/Low Precision (2026) https://arith2026.org/slides/keynote_1_Carson.pdf
+-  
 # Advanced
 - Dekker’s floating point number system and compensated summation algorithms https://arxiv.org/pdf/2602.19452v1
 - A C++ Library for Augmented Arithmentic https://github.com/VinInn/TwoFloat
