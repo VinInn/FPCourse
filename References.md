@@ -1,7 +1,7 @@
 # History
-- The Table Maker's Dilemma and Correctly-Rounded Functions: A Quick Review of 25 Years of Work : https://arith2026.org/slides/keynote_2_Muller.pdf
-- Much Ado About Nothing's Sign bit:  https://people.freebsd.org/~das/kahan86branch.pdf
 - IEEE Standard 754 for Binary Floating-Point Arithmetic (1996) : https://faculty.cc.gatech.edu/~hyesoon/spr09/ieee754.pdf
+- Much Ado About Nothing's Sign bit:  https://people.freebsd.org/~das/kahan86branch.pdf
+- The Table Maker's Dilemma and Correctly-Rounded Functions: A Quick Review of 25 Years of Work : https://arith2026.org/slides/keynote_2_Muller.pdf
 
 # Basics
 - Training on floating-point computations (December 2025) by Paul Zimmermann : The IEEE 754 standard, Math Fundamentals, Core Algorithms, Elementary Function Approximation, Software Tools https://members.loria.fr/PZimmermann/talks/module1.pdf, https://members.loria.fr/PZimmermann/talks/module2.pdf https://members.loria.fr/PZimmermann/talks/module3.pdf https://members.loria.fr/PZimmermann/talks/module4.pdf https://members.loria.fr/PZimmermann/talks/module5.pdf
