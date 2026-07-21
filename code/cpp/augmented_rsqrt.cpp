@@ -11,6 +11,11 @@
 #include<tuple>
 
 
+#ifdef NEWMAGIC
+    constexpr int MC = 1597465647;
+#else
+    constexpr int MC = 0x5f3759df;
+#endif
 
 std::pair<float,float> rsqrt(float x) {
    //float r = 1.0f / __builtin_sqrtf(x);
@@ -20,7 +25,7 @@ std::pair<float,float> rsqrt(float x) {
     #else
     union {float f;int i;} tmp;
     tmp.f = x;
-    tmp.i = 0x5f3759df - (tmp.i >> 1);
+    tmp.i = MC - (tmp.i >> 1);
     r = tmp.f; 
    #endif
    // standard one NR iteration
@@ -108,19 +113,27 @@ for ( auto k : v) {
    #else
     union {float f;int i;} tmp;
     tmp.f = k;
-    tmp.i = 0x5f3759df - (tmp.i >> 1);
+    tmp.i = MC - (tmp.i >> 1);
     y = tmp.f;
    #endif
-   printf("intr %a %a\n",k,y);
-   y =  0.5f * y * (3.f - k * (y * y));
-   printf("1NR %a %a\n",k,y);
-   y =  0.5f * y * (3.f - k * (y * y));
-   printf("2NR %a %a\n",k,y);
-   y =  0.5f * y * (3.f - k * (y * y));
-   printf("3NR %a %a\n",k,y);
-
+   auto z = y;
    float q = 1.f/std::sqrt(k);
    printf("libm %a %a\n",k,q);
+   printf("intr %a %a %a\n",k,y, q-y);
+   y =  0.5f * y * (3.f - k * (y * y));
+   printf("1NR %a %a %a\n",k,y, q-y);
+   y =  0.5f * y * (3.f - k * (y * y));
+   printf("2NR %a %a %a\n",k,y, q-y);
+   y =  0.5f * y * (3.f - k * (y * y));
+   printf("3NR %a %a %a\n\n",k,y, q-y);
+
+   y = z;
+   y = y *(1.47f - 0.47f*k*(y*y));
+   printf("1NR %a %a %a\n",k,y, q-y);
+   y =  0.5f * y * (3.f - k * (y * y));
+   printf("2NR %a %a %a\n",k,y, q-y);
+   y =  0.5f * y * (3.f - k * (y * y));
+   printf("3NR %a %a %a\n\n\n",k,y, q-y);
 
    auto qf = rsqrt(k);
    printf("me %a {%a,%a} = %a\n",k,qf.first,qf.second, double(qf.first)+double(qf.second));
