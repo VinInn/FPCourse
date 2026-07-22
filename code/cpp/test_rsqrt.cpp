@@ -30,7 +30,7 @@ template<int NR=NNR>
 float rsqrt(float x) {
   float y;
    #if defined(NOMAGIC)
-     _mm_store_ss( &y, _mm_rsqrt_ss( _mm_load_ss( &k ) ) );
+     _mm_store_ss( &y, _mm_rsqrt_ss( _mm_load_ss( &x ) ) );
    #else
     union {float f;int i;} tmp;
     tmp.f = x;
