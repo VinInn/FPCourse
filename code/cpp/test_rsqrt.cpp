@@ -2,7 +2,9 @@
 c++ -O3 test_rsqrt.cpp -DNNR=0 -march=native; ./a.out
 c++ -O3 test_rsqrt.cpp -DNNR=1 -march=native; ./a.out
 c++ -O3 test_rsqrt.cpp -DNNR=2 -march=native; ./a.out
-c++ -O3 test_rsqrt.cpp -DNNR=1 -DNEWMAGIC -DNEWNR; ./a.out
+c++ -O3 test_rsqrt.cpp -DNNR=0 -DNEWMAGIC -DNEWNR -march=native; ./a.out
+c++ -O3 test_rsqrt.cpp -DNNR=1 -DNEWMAGIC -DNEWNR -march=native; ./a.out
+c++ -O3 test_rsqrt.cpp -DNNR=2 -DNEWMAGIC -DNEWNR -march=native; ./a.out
 c++ -O3 test_rsqrt.cpp -DNNR=0 -march=native -DNOMAGIC ; ./a.out
 c++ -O3 test_rsqrt.cpp -DNNR=1 -march=native -DNOMAGIC ; ./a.out
 */
@@ -15,7 +17,7 @@ c++ -O3 test_rsqrt.cpp -DNNR=1 -march=native -DNOMAGIC ; ./a.out
 #endif
 
 #include<tuple>
-
+#include<memory>
 
 #ifdef NEWMAGIC
 // https://web.archive.org/web/20180709021629/http://rrrola.wz.cz/inv_sqrt.html
@@ -25,7 +27,8 @@ c++ -O3 test_rsqrt.cpp -DNNR=1 -march=native -DNOMAGIC ; ./a.out
 #endif
 
 
-inline float nr(float x, float y) {
+// optimized NR (works only as first iteration)
+inline float nr1(float x, float y) {
 #ifdef NEWNR
 // https://web.archive.org/web/20180709021629/http://rrrola.wz.cz/inv_sqrt.html
   // return y * (1.47f - 0.47f*x*(y*y));
@@ -34,6 +37,12 @@ inline float nr(float x, float y) {
   return 0.5f * y * (3.f - x * (y * y));
 #endif
 }
+
+// standard NR for rsqrt
+inline float nr(float x, float y) {
+  return 0.5f * y * (3.f - x * (y * y));
+}
+
 
 template<int NR=NNR>
 float rsqrt(float x) {
@@ -46,7 +55,8 @@ float rsqrt(float x) {
     tmp.i = MC - (tmp.i >> 1);
     y = tmp.f;
    #endif
-   for (int i=0; i<NR; ++i)
+   if constexpr (NR>0) y = nr1(x,y);
+   for (int i=1; i<NR; ++i)
     y = nr(x,y);
    return y;
 }
