@@ -1,3 +1,11 @@
+/* 
+c++ -O3 test_rsqrt.cpp -DNNR=0 -march=native; ./a.out
+c++ -O3 test_rsqrt.cpp -DNNR=1 -march=native; ./a.out
+c++ -O3 test_rsqrt.cpp -DNNR=2 -march=native; ./a.out
+c++ -O3 test_rsqrt.cpp -DNNR=1 -DNEWMAGIC -DNEWNR; ./a.out
+c++ -O3 test_rsqrt.cpp -DNNR=0 -march=native -DNOMAGIC ; ./a.out
+c++ -O3 test_rsqrt.cpp -DNNR=1 -march=native -DNOMAGIC ; ./a.out
+*/
 #include <cmath>
 #include<cstdio>
 #include<cstring>
@@ -6,13 +14,12 @@
 #include <x86intrin.h>
 #endif
 
-
-
 #include<tuple>
 
 
 #ifdef NEWMAGIC
-    constexpr int MC = 1597465647;
+// https://web.archive.org/web/20180709021629/http://rrrola.wz.cz/inv_sqrt.html
+    constexpr int MC = 0x5F1FFFF9; // 1597465647;
 #else
     constexpr int MC = 0x5f3759df;
 #endif
@@ -20,7 +27,9 @@
 
 inline float nr(float x, float y) {
 #ifdef NEWNR
-  return y * (1.47f - 0.47f*x*(y*y));
+// https://web.archive.org/web/20180709021629/http://rrrola.wz.cz/inv_sqrt.html
+  // return y * (1.47f - 0.47f*x*(y*y));
+  return 0.703952253f * y * (2.38924456f - x * (y * y));
 #else
   return 0.5f * y * (3.f - x * (y * y));
 #endif
