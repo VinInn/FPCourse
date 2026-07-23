@@ -1,12 +1,12 @@
 /* 
-c++ -O3 test_rsqrt.cpp -DNNR=0 -march=native; ./a.out
-c++ -O3 test_rsqrt.cpp -DNNR=1 -march=native; ./a.out
-c++ -O3 test_rsqrt.cpp -DNNR=2 -march=native; ./a.out
-c++ -O3 test_rsqrt.cpp -DNNR=0 -DNEWMAGIC -DNEWNR -march=native; ./a.out
-c++ -O3 test_rsqrt.cpp -DNNR=1 -DNEWMAGIC -DNEWNR -march=native; ./a.out
-c++ -O3 test_rsqrt.cpp -DNNR=2 -DNEWMAGIC -DNEWNR -march=native; ./a.out
-c++ -O3 test_rsqrt.cpp -DNNR=0 -march=native -DNOMAGIC ; ./a.out
-c++ -O3 test_rsqrt.cpp -DNNR=1 -march=native -DNOMAGIC ; ./a.out
+c++ -std=c++23 -O3 test_rsqrt.cpp -DNNR=0 -march=native; ./a.out
+c++ -std=c++23 -O3 test_rsqrt.cpp -DNNR=1 -march=native; ./a.out
+c++ -std=c++23 -O3 test_rsqrt.cpp -DNNR=2 -march=native; ./a.out
+c++ -std=c++23 -O3 test_rsqrt.cpp -DNNR=0 -DNEWMAGIC -DNEWNR -march=native; ./a.out
+c++ -std=c++23 -O3 test_rsqrt.cpp -DNNR=1 -DNEWMAGIC -DNEWNR -march=native; ./a.out
+c++ -std=c++23 -O3 test_rsqrt.cpp -DNNR=2 -DNEWMAGIC -DNEWNR -march=native; ./a.out
+c++ -std=c++23 -O3 test_rsqrt.cpp -DNNR=0 -march=native -DNOMAGIC ; ./a.out
+c++ -std=c++23 -O3 test_rsqrt.cpp -DNNR=1 -march=native -DNOMAGIC ; ./a.out
 */
 #include <cmath>
 #include<cstdio>
