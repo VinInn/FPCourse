@@ -1,6 +1,7 @@
-// clang++ -fsanitize=numerical -Wall -g ~innocent/public/ctest/floatPrec/quadSolvers.cpp -fno-sanitize-trap=all -fsanitize-recover=all -Ofast -march=native -std=c++23
-// c++ -O3 -Wall quadSolvers.cpp -lquadmath -march=native -std=c++23
-// clang++ -O3 -Wall quadSolvers.cpp -lquadmath -I$gcc_home/lib/gcc/x86_64-pc-linux-gnu/15.0.0/include -march=native -std=c++23
+// clang++ -fsanitize=numerical -Wall -g ~innocent/public/ctest/floatPrec/quadSolvers.cpp -fno-sanitize-trap=all -fsanitize-recover=all -Ofast -march=native -std=c++23 -fno-math-errno
+// c++ -O3 -Wall quadSolvers.cpp -lquadmath -march=native -std=c++23 -fno-math-errno
+// clang++ -O3 -Wall quadSolvers.cpp -lquadmath -I$gcc_home/lib/gcc/x86_64-pc-linux-gnu/15.0.0/include -march=native -std=c++23 -fno-math-errno
+// see also https://marc-b-reynolds.github.io/math/2020/01/10/Quadratic.html
 #include<cmath>
 #include<tuple>
 #include<limits>
